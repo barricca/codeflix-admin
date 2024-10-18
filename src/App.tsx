@@ -3,23 +3,10 @@ import "./App.css";
 import { Header } from "./components/Header";
 import { Layout } from "./components/Layout";
 import { appTheme } from "./config/theme";
-import { Routes, Route, Link } from "react-router-dom";
-
-const Home = () => (
-  <Box>
-    <Typography variant="h3" component="h1">
-      Home
-    </Typography>
-  </Box>
-);
-
-const About = () => (
-  <Box>
-    <Typography variant="h3" component="h1">
-      About
-    </Typography>
-  </Box>
-);
+import { Routes, Route } from "react-router-dom";
+import { CategoryList } from "./features/categories/ListCategory";
+import { CategoryCreate } from "./features/categories/CreateCategory";
+import { CategoryEdit } from "./features/categories/EditCategory";
 
 function App() {
   return (
@@ -34,8 +21,20 @@ function App() {
         <Header />
         <Layout>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
+            <Route path="/" element={<CategoryList />} />
+            <Route path="/categories" element={<CategoryList />} />
+            <Route path="/categories/create" element={<CategoryCreate />} />
+            <Route path="/categories/edit/:id" element={<CategoryEdit />} />
+
+            <Route
+              path="*"
+              element={
+                <Box sx={{ color: "white" }}>
+                  <Typography variant="h1">404</Typography>
+                  <Typography variant="h2">Page Not Found</Typography>
+                </Box>
+              }
+            />
           </Routes>
         </Layout>
       </Box>
