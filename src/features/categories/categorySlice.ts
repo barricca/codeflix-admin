@@ -14,7 +14,7 @@ interface Category {
 const category: Category = {
   id: "2e9fddb8-e4ee-429a-99ad-b5c8630d76c0",
   name: "IndianRed",
-  description: null,
+  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
   is_active: true,
   deleted_at: null,
   created_at: "2024-10-18T02:46:45+0000",
@@ -27,6 +27,7 @@ export const initialState = [
     ...category,
     id: "2e9fddb8-e4ee-429a-99ad-b5c8630d76c1",
     name: "Crimson",
+    is_active: false,
   },
   {
     ...category,
