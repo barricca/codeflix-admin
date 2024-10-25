@@ -4,6 +4,7 @@ import {
   GridColDef,
   GridRenderCellParams,
   GridRowsProp,
+  GridToolbar,
 } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";
@@ -77,7 +78,20 @@ export const CategoryList = () => {
         <Typography key={category.id}>{category.name}</Typography>
       ))} */}
       <div style={{ height: 300, width: "100%" }}>
-        <DataGrid rows={rows} columns={columns} />
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          disableColumnFilter
+          disableColumnSelector
+          disableDensitySelector
+          disableRowSelectionOnClick
+          slots={{ toolbar: GridToolbar }}
+          slotProps={{
+            toolbar: {
+              showQuickFilter: true,
+            },
+          }}
+        />
       </div>
     </Box>
   );
