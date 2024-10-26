@@ -52,7 +52,23 @@ const categoriesSlice = createSlice({
 });
 
 // Selectors
-
 export const selectCategories = (state: RootState) => state.categories;
+
+// Select catepory by id
+export const selectCategoryById = (state: RootState, id: string) => {
+  const category = state.categories.find((category) => category.id === id);
+
+  return (
+    category || {
+      id: "",
+      name: "",
+      description: "",
+      is_active: false,
+      created_at: "",
+      updated_at: "",
+      deleted_at: null,
+    }
+  );
+};
 
 export default categoriesSlice.reducer;

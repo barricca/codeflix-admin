@@ -14,6 +14,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 export const CategoryList = () => {
   const categories = useAppSelector(selectCategories);
 
+  const slotProps = {
+    toolbar: {
+      showQuickFilter: true,
+      quickFilterProps: { debounceMs: 500 },
+    },
+  };
+
   const rows: GridRowsProp = categories.map((category) => ({
     id: category.id,
     name: category.name,
@@ -23,29 +30,47 @@ export const CategoryList = () => {
   }));
 
   const columns: GridColDef[] = [
-    { field: "name", headerName: "Name", flex: 1 },
+    {
+      field: "name",
+      flex: 1,
+      headerName: "Name",
+      renderCell: renderNameCell,
+    },
     {
       field: "isActive",
-      headerName: "Active",
       flex: 1,
-      type: "boolean",
+      headerName: "Active",
       renderCell: renderIsActiveCell,
+      type: "boolean",
     },
     { field: "createdAt", headerName: "Created At", flex: 1 },
     {
       field: "id",
-      headerName: "Actions",
       flex: 1,
+      headerName: "Actions",
       renderCell: renderActionsCell,
     },
   ];
 
+  function renderNameCell(rowData: GridRenderCellParams) {
+    return (
+      <Link
+        style={{
+          textDecoration: "none",
+        }}
+        to={`/categories/edit/${rowData.id}`}
+      >
+        <Typography color="primary">{rowData.value}</Typography>
+      </Link>
+    );
+  }
+
   function renderActionsCell(params: GridRenderCellParams) {
     return (
       <IconButton
+        aria-label="delete"
         color="secondary"
         onClick={() => console.log("clicked")}
-        aria-label="delete"
       >
         <DeleteIcon></DeleteIcon>
       </IconButton>
@@ -64,11 +89,11 @@ export const CategoryList = () => {
     <Box maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Box display="flex" justifyContent="flex-end">
         <Button
-          variant="contained"
           color="secondary"
           component={Link}
-          to="/categories/create"
           style={{ marginBottom: "1rem" }}
+          to="/categories/create"
+          variant="contained"
         >
           New Category
         </Button>
@@ -77,22 +102,18 @@ export const CategoryList = () => {
       {/* {categories.map((category) => (
         <Typography key={category.id}>{category.name}</Typography>
       ))} */}
-      <div style={{ height: 300, width: "100%" }}>
+      <Box sx={{ display: "flex", height: "600" }}>
         <DataGrid
-          rows={rows}
           columns={columns}
+          rows={rows}
           disableColumnFilter
           disableColumnSelector
           disableDensitySelector
           disableRowSelectionOnClick
+          slotProps={slotProps}
           slots={{ toolbar: GridToolbar }}
-          slotProps={{
-            toolbar: {
-              showQuickFilter: true,
-            },
-          }}
         />
-      </div>
+      </Box>
     </Box>
   );
 };
