@@ -1,11 +1,12 @@
 import { Box, Paper, Typography } from "@mui/material";
-import React from "react";
-import { Category } from "./categorySlice";
+import { useState } from "react";
+import { useAppDispatch } from "../../app/hooks";
+import { Category, createCategory } from "./categorySlice";
 import { CategoryForm } from "./components/CategoryForm";
 
 export const CategoryCreate = () => {
-  const [isDisable, setIsDisabled] = React.useState(false);
-  const [category, setCategory] = React.useState<Category>({
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [categoryState, setCategoryState] = useState<Category>({
     id: "",
     name: "",
     description: "",
@@ -14,9 +15,21 @@ export const CategoryCreate = () => {
     created_at: "",
     updated_at: "",
   });
+  const dispatch = useAppDispatch();
 
-  const handleChange = (e: any) => {};
-  const handleToggle = (e: any) => {};
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    dispatch(createCategory(categoryState));
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setCategoryState({ ...categoryState, [name]: value });
+  };
+  const handleToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = e.target;
+    setCategoryState({ ...categoryState, [name]: checked });
+  };
 
   return (
     <Box>
@@ -27,11 +40,12 @@ export const CategoryCreate = () => {
           </Box>
         </Box>
         <CategoryForm
-          category={category}
-          isDisabled={isDisable}
-          onSubmit={() => {}}
+          category={categoryState}
           handleChange={handleChange}
+          handleSubmit={handleSubmit}
           handleToggle={handleToggle}
+          isDisabled={isDisabled}
+          isLoading={false}
         />
       </Paper>
     </Box>
