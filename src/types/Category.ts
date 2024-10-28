@@ -36,3 +36,10 @@ export interface Meta {
   last_page: number;
   current_page: number;
 }
+
+export interface CategoryParams {
+  page?: number;
+  perPage?: number;
+  search?: string;
+  isActive?: boolean;
+}

@@ -9,11 +9,14 @@ import {
 import { CategoryTable } from "./components/CategoryTable";
 
 export const CategoryList = () => {
-  const [page] = useState(1);
-  const [serach, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
   const [perPage] = useState(10);
   const [rowsPerPage] = useState([10, 25, 50, 100]);
-  const { data, isFetching, error } = useGetCategoriesQuery();
+
+  const options = { perPage, page, search };
+
+  const { data, isFetching, error } = useGetCategoriesQuery(options);
   const [deleteCategory, deleteCategoryStatus] = useDeleteCategoryMutation();
   const { enqueueSnackbar } = useSnackbar();
 
