@@ -1,13 +1,13 @@
 import { Box, ThemeProvider, Typography } from "@mui/material";
+import { SnackbarProvider } from "notistack";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import { Header } from "./components/Header";
 import { Layout } from "./components/Layout";
 import { appTheme } from "./config/theme";
-import { Routes, Route } from "react-router-dom";
-import { CategoryList } from "./features/categories/ListCategory";
 import { CategoryCreate } from "./features/categories/CreateCategory";
 import { CategoryEdit } from "./features/categories/EditCategory";
-import { SnackbarProvider } from "notistack";
+import { CategoryList } from "./features/categories/ListCategory";
 
 function App() {
   return (

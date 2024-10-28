@@ -1,9 +1,9 @@
 import { Box, Paper, Typography } from "@mui/material";
+import { useSnackbar } from "notistack";
 import { useState } from "react";
 import { useAppDispatch } from "../../app/hooks";
 import { Category, createCategory } from "./categorySlice";
 import { CategoryForm } from "./components/CategoryForm";
-import { useSnackbar } from "notistack";
 
 export const CategoryCreate = () => {
   const [isDisabled, setIsDisabled] = useState(false);

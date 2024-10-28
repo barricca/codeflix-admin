@@ -1,10 +1,10 @@
 import { Box, Paper, Typography } from "@mui/material";
+import { useSnackbar } from "notistack";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { Category, selectCategoryById, updateCategory } from "./categorySlice";
 import { CategoryForm } from "./components/CategoryForm";
-import { useSnackbar } from "notistack";
 
 export const CategoryEdit = () => {
   const id = useParams().id ?? "";
