@@ -6,6 +6,7 @@ import {
   GridFilterModel,
   GridRenderCellParams,
   GridRowsProp,
+  GridToolbar,
 } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import { Results } from "../../../types/Category";
@@ -109,9 +110,35 @@ export function CategoryTable({
     );
   }
 
+  const rowCount = data?.meta.total ?? 0;
+
   return (
     <Box sx={{ display: "flex", height: 600 }}>
-      <DataGrid rows={rows} columns={columns} />
+      <DataGrid
+        checkboxSelection={false}
+        columns={columns}
+        disableColumnFilter={true}
+        disableColumnSelector={true}
+        disableDensitySelector={true}
+        disableRowSelectionOnClick={true}
+        filterMode={"server"}
+        initialState={{
+          pagination: { paginationModel: { pageSize: perPage } },
+        }}
+        loading={isFetching}
+        onPaginationModelChange={(model) => {
+          handleOnPageChange(model.page);
+          handleOnPageSizeChange(model.pageSize);
+        }}
+        onFilterModelChange={handleFilterChange}
+        pagination={true}
+        paginationMode={"server"}
+        pageSizeOptions={[rowsPerPage]}
+        rowCount={rowCount}
+        rows={rows}
+        slotProps={slotProps}
+        slots={{ toolbar: GridToolbar }}
+      />
     </Box>
   );
 }
