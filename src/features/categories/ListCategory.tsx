@@ -8,20 +8,16 @@ import {
   GridToolbar,
 } from "@mui/x-data-grid";
 import { useSnackbar } from "notistack";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
-  deleteCategory,
-  selectCategories,
   useDeleteCategoryMutation,
   useGetCategoriesQuery,
 } from "./categorySlice";
-import { useEffect } from "react";
 
 export const CategoryList = () => {
   const { data, isFetching, error } = useGetCategoriesQuery();
   const [deleteCategory, deleteCategoryStatus] = useDeleteCategoryMutation();
-  const dispatch = useAppDispatch();
   const { enqueueSnackbar } = useSnackbar();
 
   const slotProps = {
@@ -136,6 +132,8 @@ export const CategoryList = () => {
           disableColumnSelector
           disableDensitySelector
           disableRowSelectionOnClick
+          initialState={{ pagination: { paginationModel: { pageSize: 5 } } }}
+          pageSizeOptions={[5, 10, 20, 25, { value: -1, label: "All" }]}
           slotProps={slotProps}
           slots={{ toolbar: GridToolbar }}
         />
