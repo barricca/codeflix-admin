@@ -1,16 +1,24 @@
 import { Box, Paper, Typography } from "@mui/material";
 import { useSnackbar } from "notistack";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { Category, selectCategoryById, updateCategory } from "./categorySlice";
+import { useAppDispatch } from "../../app/hooks";
+import { Category, updateCategory, useGetCategoryQuery } from "./categorySlice";
 import { CategoryForm } from "./components/CategoryForm";
 
 export const CategoryEdit = () => {
   const id = useParams().id ?? "";
+  const { data: category, isFetching } = useGetCategoryQuery({ id });
   const [isDisabled, setIsDisabled] = useState(false);
-  const category = useAppSelector((state) => selectCategoryById(state, id));
-  const [categoryState, setCategoryState] = useState<Category>(category);
+  const [categoryState, setCategoryState] = useState<Category>({
+    id: "",
+    name: "",
+    description: "",
+    is_active: false,
+    deleted_at: "",
+    created_at: "",
+    updated_at: "",
+  });
   const dispatch = useAppDispatch();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -24,10 +32,17 @@ export const CategoryEdit = () => {
     const { name, value } = e.target;
     setCategoryState({ ...categoryState, [name]: value });
   };
+
   const handleToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
     setCategoryState({ ...categoryState, [name]: checked });
   };
+
+  useEffect(() => {
+    if (category) {
+      setCategoryState(category.data);
+    }
+  }, [category]);
 
   return (
     <Box>

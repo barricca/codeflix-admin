@@ -61,10 +61,29 @@ function createCategoryMutation(category: Category) {
   };
 }
 
+function updateCategoryMutation(category: Category) {
+  return {
+    url: `${endpointUrl}/${category.id}`,
+    method: "PUT",
+    body: category,
+  };
+}
+
+function getCategory({ id }: { id: string }) {
+  return {
+    url: `${endpointUrl}/${id}`,
+    method: "GET",
+  };
+}
+
 export const categoriesApiSlice = apiSlice.injectEndpoints({
   endpoints: ({ query, mutation }) => ({
     getCategories: query<Results, CategoryParams>({
       query: getCategories,
+      providesTags: ["Categories"],
+    }),
+    getCategory: query<Result, { id: string }>({
+      query: getCategory,
       providesTags: ["Categories"],
     }),
     createCategory: mutation<Result, Category>({
@@ -73,6 +92,10 @@ export const categoriesApiSlice = apiSlice.injectEndpoints({
     }),
     deleteCategory: mutation<Result, { id: string }>({
       query: deleteCategoryMutation,
+      invalidatesTags: ["Categories"],
+    }),
+    updateCategory: mutation<Result, Category>({
+      query: updateCategoryMutation,
       invalidatesTags: ["Categories"],
     }),
   }),
@@ -161,5 +184,7 @@ export const { createCategory, updateCategory, deleteCategory } =
 export const {
   useCreateCategoryMutation,
   useGetCategoriesQuery,
+  useGetCategoryQuery,
   useDeleteCategoryMutation,
+  useUpdateCategoryMutation,
 } = categoriesApiSlice;
