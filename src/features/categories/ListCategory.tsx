@@ -1,4 +1,5 @@
 import { Box, Button } from "@mui/material";
+import { GridFilterModel } from "@mui/x-data-grid";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -11,8 +12,8 @@ import { CategoryTable } from "./components/CategoryTable";
 export const CategoryList = () => {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
-  const [perPage] = useState(10);
-  const [rowsPerPage] = useState([10, 25, 50, 100]);
+  const [perPage, setPerPage] = useState(10);
+  const [rowsPerPage] = useState([2, 10, 25, 50, 100]);
 
   const options = { perPage, page, search };
 
@@ -21,15 +22,20 @@ export const CategoryList = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   function handleOnPageChange(page: number) {
-    console.log(page);
+    setPage(page);
   }
 
-  function handleOnPageSizeChange(pageSize: number) {
-    console.log(pageSize);
+  function handleOnPageSizeChange(perPage: number) {
+    setPerPage(perPage);
   }
 
-  function handleFilterChange(filterModel: any) {
-    console.log(filterModel);
+  function handleFilterChange(filterModel: GridFilterModel) {
+    if (filterModel.quickFilterValues?.length) {
+      const search = filterModel.quickFilterValues.join("");
+      setSearch(search);
+    } else {
+      setSearch("");
+    }
   }
 
   async function handleDeleteCategory(id: string) {
