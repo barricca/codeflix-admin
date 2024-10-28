@@ -13,9 +13,10 @@ import { Results } from "../../../types/Category";
 
 type Props = {
   data: Results | undefined;
+  page: number;
   perPage: number;
   isFetching: boolean;
-  rowsPerPage?: number;
+  rowsPerPage?: number[];
 
   handleOnPageChange: (page: number) => void;
   handleFilterChange: (filterModel: GridFilterModel) => void;
@@ -25,9 +26,10 @@ type Props = {
 
 export function CategoryTable({
   data,
+  page,
   perPage,
   isFetching,
-  rowsPerPage = 5,
+  rowsPerPage,
   handleOnPageChange,
   handleFilterChange,
   handleOnPageSizeChange,
@@ -122,9 +124,7 @@ export function CategoryTable({
         disableDensitySelector={true}
         disableRowSelectionOnClick={true}
         filterMode={"server"}
-        initialState={{
-          pagination: { paginationModel: { pageSize: perPage } },
-        }}
+        paginationModel={{ page: page, pageSize: perPage }}
         loading={isFetching}
         onPaginationModelChange={(model) => {
           handleOnPageChange(model.page);
@@ -133,7 +133,7 @@ export function CategoryTable({
         onFilterModelChange={handleFilterChange}
         pagination={true}
         paginationMode={"server"}
-        pageSizeOptions={[rowsPerPage]}
+        pageSizeOptions={rowsPerPage}
         rowCount={rowCount}
         rows={rows}
         slotProps={slotProps}
