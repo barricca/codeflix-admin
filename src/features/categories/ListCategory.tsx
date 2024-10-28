@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { GridFilterModel } from "@mui/x-data-grid";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
@@ -10,23 +10,23 @@ import {
 import { CategoryTable } from "./components/CategoryTable";
 
 export const CategoryList = () => {
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [search, setSearch] = useState("");
   const [perPage, setPerPage] = useState(10);
-  const [rowsPerPage] = useState([2, 10, 25, 50, 100]);
+  const [rowsPerPage] = useState([10, 20, 30]);
 
-  const options = { perPage, page, search };
+  const options = { perPage, page: page + 1, search };
 
   const { data, isFetching, error } = useGetCategoriesQuery(options);
   const [deleteCategory, deleteCategoryStatus] = useDeleteCategoryMutation();
   const { enqueueSnackbar } = useSnackbar();
 
-  function handleOnPageChange(page: number) {
-    setPage(page);
+  function handleOnPageChange(newPage: number) {
+    setPage(newPage);
   }
 
-  function handleOnPageSizeChange(perPage: number) {
-    setPerPage(perPage);
+  function handleOnPageSizeChange(newPerPage: number) {
+    setPerPage(newPerPage);
   }
 
   function handleFilterChange(filterModel: GridFilterModel) {
@@ -50,6 +50,10 @@ export const CategoryList = () => {
       enqueueSnackbar("Category not deleted", { variant: "error" });
     }
   }, [deleteCategoryStatus, enqueueSnackbar]);
+
+  if (error) {
+    return <Typography>Error fetching categories</Typography>;
+  }
 
   return (
     <Box maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
