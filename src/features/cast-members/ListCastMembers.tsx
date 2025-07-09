@@ -7,29 +7,29 @@ import {
 	useDeleteCastMemberMutation,
 	useGetCastMembersQuery,
 } from "./castMembersSlice";
-
-const initialOptions = {
-	page: 1,
-	search: "",
-	perPage: 10,
-	rowsPerPage: [10, 25, 30],
-};
+import { CastMembersTable } from "./components/CastMembersTable";
 
 export const ListCastMembers = () => {
-	const [options, setOptions] = useState(initialOptions);
+	const { enqueueSnackbar } = useSnackbar();
+	const [options, setOptions] = useState({
+		page: 1,
+		search: "",
+		perPage: 10,
+		rowsPerPage: [10, 20, 30],
+	});
 	const { data, isFetching, error } = useGetCastMembersQuery(options);
 	const [deleteCastMember, { error: deleteError, isSuccess: deleteSuccess }] =
 		useDeleteCastMemberMutation();
 
-	const { enqueueSnackbar } = useSnackbar();
+	async function handleDeleteCastMember(id: string) {
+		await deleteCastMember({ id });
+	}
 
 	function handleOnPageChange(page: number) {
-		options.page = page;
-		setOptions({ ...options, page });
+		setOptions({ ...options, page: page + 1 });
 	}
 
 	function handleOnPageSizeChange(perPage: number) {
-		options.perPage = perPage;
 		setOptions({ ...options, perPage });
 	}
 
@@ -39,12 +39,7 @@ export const ListCastMembers = () => {
 		}
 
 		const search = filterModel.quickFilterValues.join("");
-		options.search = search;
 		setOptions({ ...options, search });
-	}
-
-	async function handleDeleteCastMember({ id }: { id: string }) {
-		await deleteCastMember({ id });
 	}
 
 	useEffect(() => {
@@ -57,7 +52,7 @@ export const ListCastMembers = () => {
 	}, [deleteError, deleteSuccess, enqueueSnackbar]);
 
 	if (error) {
-		return <Typography variant="h2">Erro</Typography>;
+		return <Typography variant="h2">Error!</Typography>;
 	}
 
 	return (
@@ -73,6 +68,16 @@ export const ListCastMembers = () => {
 					New Cast Member
 				</Button>
 			</Box>
+			<CastMembersTable
+				data={data}
+				perPage={options.perPage}
+				isFetching={isFetching}
+				rowsPerPage={options.rowsPerPage}
+				handleOnPageChange={handleOnPageChange}
+				handleFilterChange={handleFilterChange}
+				handleOnPageSizeChange={handleOnPageSizeChange}
+				handleDelete={handleDeleteCastMember}
+			/>
 		</Box>
 	);
 };
