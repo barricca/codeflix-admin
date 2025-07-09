@@ -8,9 +8,9 @@ import {
   Switch,
   TextField,
 } from "@mui/material";
-import React from "react";
+
 import { Link } from "react-router-dom";
-import { Category } from "../categorySlice";
+import type { Category } from "../../../types/Category";
 
 type Props = {
   category: Category;
@@ -28,7 +28,7 @@ export function CategoryForm({
   handleSubmit,
   handleChange,
   handleToggle,
-}: Props) {
+}: Readonly<Props>) {
   return (
     <Box p={2}>
       <form onSubmit={handleSubmit}>
@@ -39,9 +39,10 @@ export function CategoryForm({
                 required
                 name="name"
                 label="Name"
-                value={category.name}
+                value={category.name || ""}
                 disabled={isDisabled}
                 onChange={handleChange}
+                inputProps={{ "data-testid": "name" }}
               />
             </FormControl>
           </Grid>
@@ -51,9 +52,10 @@ export function CategoryForm({
                 required
                 name="description"
                 label="Description"
-                value={category.description}
+                inputProps={{ "data-testid": "description" }}
                 disabled={isDisabled}
                 onChange={handleChange}
+                value={category.description || ""}
               />
             </FormControl>
           </Grid>
@@ -67,6 +69,8 @@ export function CategoryForm({
                     onChange={handleToggle}
                     checked={category.is_active}
                     inputProps={{ "aria-label": "controlled" }}
+                    data-testid="is_active"
+                    disabled={isDisabled}
                   />
                 }
                 label="Active"
@@ -78,8 +82,13 @@ export function CategoryForm({
               <Button variant="contained" component={Link} to="/categories">
                 Back
               </Button>
-              <Button variant="contained" color="secondary" type="submit">
-                Save
+              <Button
+                type="submit"
+                variant="contained"
+                color="secondary"
+                disabled={isDisabled || isLoading}
+              >
+                {isLoading ? "Loading..." : "Save"}
               </Button>
             </Box>
           </Grid>

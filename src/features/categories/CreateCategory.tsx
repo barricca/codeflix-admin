@@ -1,7 +1,8 @@
 import { Box, Paper, Typography } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
-import { Category, useCreateCategoryMutation } from "./categorySlice";
+import type { Category } from "../../types/Category";
+import { useCreateCategoryMutation } from "./categorySlice";
 import { CategoryForm } from "./components/CategoryForm";
 
 export const CategoryCreate = () => {
@@ -11,11 +12,11 @@ export const CategoryCreate = () => {
   const [categoryState, setCategoryState] = useState<Category>({
     id: "",
     name: "",
-    description: "",
     is_active: false,
-    deleted_at: "",
     created_at: "",
     updated_at: "",
+    deleted_at: "",
+    description: "",
   });
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -34,11 +35,11 @@ export const CategoryCreate = () => {
 
   useEffect(() => {
     if (status.isSuccess) {
-      enqueueSnackbar("Success creating category", { variant: "success" });
+      enqueueSnackbar("Category created successfully", { variant: "success" });
       setIsDisabled(true);
     }
     if (status.error) {
-      enqueueSnackbar("Error creating category", { variant: "error" });
+      enqueueSnackbar("Category not created", { variant: "error" });
     }
   }, [enqueueSnackbar, status.error, status.isSuccess]);
 
@@ -51,12 +52,12 @@ export const CategoryCreate = () => {
           </Box>
         </Box>
         <CategoryForm
-          category={categoryState}
-          handleChange={handleChange}
-          handleSubmit={handleSubmit}
-          handleToggle={handleToggle}
-          isDisabled={isDisabled}
           isLoading={false}
+          isDisabled={isDisabled}
+          category={categoryState}
+          handleSubmit={handleSubmit}
+          handleChange={handleChange}
+          handleToggle={handleToggle}
         />
       </Paper>
     </Box>

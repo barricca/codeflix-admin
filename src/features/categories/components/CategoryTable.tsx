@@ -1,32 +1,28 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Box, IconButton, Typography } from "@mui/material";
-import {
-  DataGrid,
+import type {
   GridColDef,
   GridFilterModel,
-  GridRenderCellParams,
-  GridRowsProp,
-  GridToolbar,
+  GridRenderCellParams
 } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
-import { Results } from "../../../types/Category";
+import type { Results } from "../../../types/Category";
 
 type Props = {
   data: Results | undefined;
-  page: number;
   perPage: number;
   isFetching: boolean;
   rowsPerPage?: number[];
 
   handleOnPageChange: (page: number) => void;
   handleFilterChange: (filterModel: GridFilterModel) => void;
-  handleOnPageSizeChange: (pageSize: number) => void;
+  handleOnPageSizeChange: (perPage: number) => void;
   handleDelete: (id: string) => void;
 };
 
 export function CategoryTable({
   data,
-  page,
   perPage,
   isFetching,
   rowsPerPage,
@@ -34,37 +30,29 @@ export function CategoryTable({
   handleFilterChange,
   handleOnPageSizeChange,
   handleDelete,
-}: Props) {
-  const slotProps = {
+}: Readonly<Props>) {
+  const componentProps = {
     toolbar: {
       showQuickFilter: true,
       quickFilterProps: { debounceMs: 500 },
     },
   };
 
-  const rows: GridRowsProp = data ? mapDataToGridRows(data) : [];
-
   const columns: GridColDef[] = [
-    {
-      field: "name",
-      flex: 1,
-      headerName: "Name",
-      renderCell: renderNameCell,
-    },
+    { field: "name", flex: 1, headerName: "Name", renderCell: renderNameCell },
     {
       field: "isActive",
-      flex: 1,
       headerName: "Active",
-      renderCell: renderIsActiveCell,
+      flex: 1,
       type: "boolean",
+      renderCell: renderIsActiveCell
     },
-    { field: "createdAt", headerName: "Created At", flex: 1 },
     {
       field: "id",
-      flex: 1,
       headerName: "Actions",
-      renderCell: renderActionsCell,
       type: "string",
+      flex: 1,
+      renderCell: renderActionsCell
     },
   ];
 
@@ -73,34 +61,32 @@ export function CategoryTable({
     return categories.map((category) => ({
       id: category.id,
       name: category.name,
-      description: category.description,
       isActive: category.is_active,
       createdAt: new Date(category.created_at).toLocaleDateString("pt-BR"),
     }));
   }
 
+  function renderActionsCell(params: GridRenderCellParams) {
+    return (
+      <IconButton
+        color="secondary"
+        onClick={() => handleDelete(params.value)}
+        aria-label="delete"
+        data-testid="delete-button"
+      >
+        <DeleteIcon />
+      </IconButton>
+    );
+  }
+
   function renderNameCell(rowData: GridRenderCellParams) {
     return (
       <Link
-        style={{
-          textDecoration: "none",
-        }}
+        style={{ textDecoration: "none" }}
         to={`/categories/edit/${rowData.id}`}
       >
         <Typography color="primary">{rowData.value}</Typography>
       </Link>
-    );
-  }
-
-  function renderActionsCell(params: GridRenderCellParams) {
-    return (
-      <IconButton
-        aria-label="delete"
-        color="secondary"
-        onClick={() => handleDelete(params.value)}
-      >
-        <DeleteIcon />
-      </IconButton>
     );
   }
 
@@ -112,32 +98,30 @@ export function CategoryTable({
     );
   }
 
-  const rowCount = data?.meta.total ?? 0;
+  const rows = data ? mapDataToGridRows(data) : [];
+  const rowCount = data?.meta.total || 0;
 
   return (
     <Box sx={{ display: "flex", height: 600 }}>
       <DataGrid
-        checkboxSelection={false}
+        rows={rows}
+        pagination={true}
         columns={columns}
+        pageSize={perPage}
+        filterMode="server"
+        rowCount={rowCount}
+        loading={isFetching}
+        paginationMode="server"
+        checkboxSelection={false}
         disableColumnFilter={true}
         disableColumnSelector={true}
         disableDensitySelector={true}
-        disableRowSelectionOnClick={true}
-        filterMode={"server"}
-        paginationModel={{ page: page, pageSize: perPage }}
-        loading={isFetching}
-        onPaginationModelChange={(model) => {
-          handleOnPageChange(model.page);
-          handleOnPageSizeChange(model.pageSize);
-        }}
+        rowsPerPageOptions={rowsPerPage}
+        componentsProps={componentProps}
+        onPageChange={handleOnPageChange}
+        components={{ Toolbar: GridToolbar }}
         onFilterModelChange={handleFilterChange}
-        pagination={true}
-        paginationMode={"server"}
-        pageSizeOptions={rowsPerPage}
-        rowCount={rowCount}
-        rows={rows}
-        slotProps={slotProps}
-        slots={{ toolbar: GridToolbar }}
+        onPageSizeChange={handleOnPageSizeChange}
       />
     </Box>
   );

@@ -1,5 +1,10 @@
-import {CastMember, CastMemberParams, Result, Results} from "../../types/CastMembers";
-import {apiSlice} from "../api/apiSlice";
+import type {
+  CastMember,
+  CastMemberParams,
+  Result,
+  Results,
+} from "../../types/CastMembers";
+import { apiSlice } from "../api/apiSlice";
 
 const endpointUrl = "/cast_members";
 
@@ -7,10 +12,10 @@ export const initialState: CastMember = {
   id: "",
   name: "",
   type: 0,
-  deleted_at: null,
   created_at: "",
   updated_at: "",
-}
+  deleted_at: null,
+};
 
 function parseQueryParams(params: CastMemberParams) {
   const query = new URLSearchParams();
@@ -34,7 +39,7 @@ function parseQueryParams(params: CastMemberParams) {
   return query.toString();
 }
 
-function getCastMember({id}: { id: string }) {
+function getCastMember({ id }: { id: string }) {
   return {
     url: `${endpointUrl}/${id}`,
     method: "GET",
@@ -42,24 +47,24 @@ function getCastMember({id}: { id: string }) {
 }
 
 function getCastMembers(params: CastMemberParams) {
-  const {page = 1, perPage = 10, search, type} = params;
+  const { page = 1, perPage = 10, search, type } = params;
   return `${endpointUrl}?${parseQueryParams({
     page,
     perPage,
     search,
-    type
+    type,
   })}`;
 }
 
 function createCastMember(castMember: CastMember) {
   return {
-    url: endpointUrl,
     method: "POST",
+    url: endpointUrl,
     data: castMember,
   };
 }
 
-function deleteCastMember({id}: { id: string }) {
+function deleteCastMember({ id }: { id: string }) {
   return {
     url: `${endpointUrl}/${id}`,
     method: "DELETE",
@@ -75,7 +80,7 @@ function updateCastMember(castMember: CastMember) {
 }
 
 export const castMembersApiSlice = apiSlice.injectEndpoints({
-  endpoints: ({query, mutation}) => ({
+  endpoints: ({ query, mutation }) => ({
     getCastMember: query<Result, { id: string }>({
       query: getCastMember,
       providesTags: ["CastMembers"],
@@ -96,7 +101,7 @@ export const castMembersApiSlice = apiSlice.injectEndpoints({
       query: updateCastMember,
       invalidatesTags: ["CastMembers"],
     }),
-  })
+  }),
 });
 
 export const {
@@ -104,5 +109,5 @@ export const {
   useGetCastMembersQuery,
   useDeleteCastMemberMutation,
   useCreateCastMemberMutation,
-  useUpdateCastMemberMutation
+  useUpdateCastMemberMutation,
 } = castMembersApiSlice;
