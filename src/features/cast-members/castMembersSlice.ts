@@ -65,16 +65,16 @@ function getCastMember({ id }: { id: string }) {
 
 function updateCastMember(castMember: CastMember) {
 	return {
-		body: castMember,
 		method: "PUT",
+		body: castMember,
 		url: `${endpointUrl}/${castMember.id}`,
 	};
 }
 
 function createCastMember(castMember: CastMember) {
 	return {
-		body: castMember,
 		method: "POST",
+		body: castMember,
 		url: endpointUrl,
 	};
 }
