@@ -5,6 +5,7 @@ import "./App.css";
 import { Header } from "./components/Header";
 import { Layout } from "./components/Layout";
 import { appTheme } from "./config/theme";
+import { CreateCastMembers } from "./features/cast-members/CreateCastMembers";
 import { ListCastMembers } from "./features/cast-members/ListCastMembers";
 import { CategoryCreate } from "./features/categories/CreateCategory";
 import { CategoryEdit } from "./features/categories/EditCategory";
@@ -42,7 +43,7 @@ function App() {
 							<Route path="/cast-members" element={<ListCastMembers />} />
 							<Route
 								path="/cast-members/create"
-								element={<ListCastMembers />}
+								element={<CreateCastMembers />}
 							/>
 							<Route
 								path="/cast-members/edit/:id"

@@ -8,7 +8,6 @@ import {
 	Grid,
 	Radio,
 	RadioGroup,
-	Switch,
 	TextField,
 } from "@mui/material";
 
@@ -17,19 +16,18 @@ import type { CastMember } from "../../../types/CastMembers";
 
 type Props = {
 	castMember: CastMember;
+	handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 	isDisabled?: boolean;
 	isLoading?: boolean;
-	handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-	handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-	handleToggle: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export function CastMemberForm({
 	castMember,
+	handleChange,
+	handleSubmit,
 	isDisabled = false,
 	isLoading = false,
-	handleSubmit,
-	handleChange,
 }: Readonly<Props>) {
 	return (
 		<Box p={2}>

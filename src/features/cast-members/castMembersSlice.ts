@@ -11,7 +11,7 @@ const endpointUrl = "/cast_members";
 export const initialState: CastMember = {
 	id: "",
 	name: "",
-	type: 0,
+	type: 1,
 	created_at: "",
 	updated_at: "",
 	deleted_at: null,
@@ -25,7 +25,7 @@ function parseQueryParams(params: CastMemberParams) {
 	}
 
 	if (params.perPage) {
-		query.append("per_page", params.perPage.toString());
+		query.append("perPage", params.perPage.toString());
 	}
 
 	if (params.search) {
@@ -39,13 +39,6 @@ function parseQueryParams(params: CastMemberParams) {
 	return query.toString();
 }
 
-function getCastMember({ id }: { id: string }) {
-	return {
-		url: `${endpointUrl}/${id}`,
-		method: "GET",
-	};
-}
-
 function getCastMembers(params: CastMemberParams) {
 	const { page = 1, perPage = 10, search, type } = params;
 	return `${endpointUrl}?${parseQueryParams({
@@ -56,26 +49,33 @@ function getCastMembers(params: CastMemberParams) {
 	})}`;
 }
 
-function createCastMember(castMember: CastMember) {
+function deleteCastMember({ id }: { id: string }) {
 	return {
-		method: "POST",
-		url: endpointUrl,
-		data: castMember,
+		method: "DELETE",
+		url: `${endpointUrl}/${id}`,
 	};
 }
 
-function deleteCastMember({ id }: { id: string }) {
+function getCastMember({ id }: { id: string }) {
 	return {
+		method: "GET",
 		url: `${endpointUrl}/${id}`,
-		method: "DELETE",
 	};
 }
 
 function updateCastMember(castMember: CastMember) {
 	return {
-		url: `${endpointUrl}/${castMember.id}`,
+		body: castMember,
 		method: "PUT",
-		data: castMember,
+		url: `${endpointUrl}/${castMember.id}`,
+	};
+}
+
+function createCastMember(castMember: CastMember) {
+	return {
+		body: castMember,
+		method: "POST",
+		url: endpointUrl,
 	};
 }
 
