@@ -39,10 +39,9 @@ export function CastMemberForm({
 								required
 								name="name"
 								label="Name"
-								value={castMember.name || ""}
+								value={castMember.name}
 								disabled={isDisabled}
 								onChange={handleChange}
-								inputProps={{ "data-testid": "name" }}
 							/>
 						</FormControl>
 					</Grid>
