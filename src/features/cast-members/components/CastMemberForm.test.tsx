@@ -25,10 +25,26 @@ describe("CastMemberForm", () => {
 		expect(asFragment()).toMatchSnapshot();
 	});
 
-	it("should render cast member form with loading state", () => {
-		const { asFragment } = render(<CastMemberForm {...Props} isLoading />, {
-			wrapper: BrowserRouter,
-		});
+	it("should render cast member form with loading and disabled state", () => {
+		const { asFragment } = render(
+			<CastMemberForm {...Props} isLoading={true} isDisabled={true} />,
+			{
+				wrapper: BrowserRouter,
+			},
+		);
+		expect(asFragment()).toMatchSnapshot();
+	});
+
+	it("should render with default props (isDisabled and isLoading)", () => {
+		const { asFragment } = render(
+			<CastMemberForm
+				// props base sem isDisabled nem isLoading
+				castMember={Props.castMember}
+				handleChange={Props.handleChange}
+				handleSubmit={Props.handleSubmit}
+			/>,
+			{ wrapper: BrowserRouter },
+		);
 		expect(asFragment()).toMatchSnapshot();
 	});
 });
