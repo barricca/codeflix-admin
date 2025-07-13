@@ -1,0 +1,46 @@
+export const categoryResponse = {
+	data: [
+		{
+			id: "945b7740-58e8-4c1c-811e-c2a58033e456",
+			name: "Bíblica Pentecostal",
+			description: "Relacionadas a Bíblia",
+			is_active: true,
+			deleted_at: null,
+			created_at: "2025-07-09T04:03:52+0000",
+			updated_at: "2025-07-13T16:58:36+0000",
+		},
+		{
+			id: "609b2529-e16e-4e58-b01f-4bdf6f1c7123",
+			name: "CornflowerBlue",
+			description: "Temporibus enim iure esse omnis est.",
+			is_active: true,
+			deleted_at: null,
+			created_at: "2025-07-05T13:32:26+0000",
+			updated_at: "2025-07-06T03:00:06+0000",
+		},
+		{
+			id: "c90a7c55-55c0-4d5a-93c7-28201ad498b1",
+			name: "RoyalBlue",
+			description: "Distinctio et quo similique.",
+			is_active: true,
+			deleted_at: null,
+			created_at: "2025-07-05T13:32:26+0000",
+			updated_at: "2025-07-05T13:32:26+0000",
+		},
+	],
+	links: {
+		first: "http://localhost:8000/api/categories?page=1",
+		last: "http://localhost:8000/api/categories?page=7",
+		prev: null,
+		next: "http://localhost:8000/api/categories?page=2",
+	},
+	meta: {
+		current_page: 1,
+		from: 1,
+		last_page: 7,
+		path: "http://localhost:8000/api/categories",
+		per_page: 15,
+		to: 15,
+		total: 99,
+	},
+};
