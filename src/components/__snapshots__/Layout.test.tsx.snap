@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Layout should render Layout with children correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiBox-root css-0"
+  >
+    <div
+      class="MuiContainer-root MuiContainer-maxWidthLg css-1km29jt-MuiContainer-root"
+    >
+      <h1
+        class="MuiTypography-root MuiTypography-h1 css-o2w69a-MuiTypography-root"
+      >
+        Test Title
+      </h1>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Layout should render children correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiBox-root css-0"
+  >
+    <div
+      class="MuiContainer-root MuiContainer-maxWidthLg css-1km29jt-MuiContainer-root"
+    >
+      <h1
+        class="MuiTypography-root MuiTypography-h1 css-o2w69a-MuiTypography-root"
+      >
+        Test Title
+      </h1>
+    </div>
+  </div>
+</DocumentFragment>
+`;
