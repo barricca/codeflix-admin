@@ -11,8 +11,8 @@ import { categoriesApiSlice } from "../features/categories/categorySlice";
 
 const rootReducer = combineReducers({
 	[apiSlice.reducerPath]: apiSlice.reducer,
-	[categoriesApiSlice.reducerPath]: apiSlice.reducer,
-	[castMembersApiSlice.reducerPath]: apiSlice.reducer,
+	categories: categoriesApiSlice.reducer,
+	castMembers: castMembersApiSlice.reducer,
 });
 
 export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
