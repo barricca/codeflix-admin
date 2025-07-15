@@ -7,8 +7,8 @@ export interface Category {
 	is_active: boolean;
 	created_at: string;
 	updated_at: string;
-	description: null | string;
 	deleted_at: null | string;
+	description: null | string;
 }
 
 const endpointUrl = "/categories";

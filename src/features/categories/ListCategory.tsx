@@ -52,7 +52,12 @@ export const CategoryList = () => {
 	}, [deleteError, deleteSuccess, enqueueSnackbar]);
 
 	if (error) {
-		return <Typography>Error fetching categories</Typography>;
+		return (
+			<>
+				{console.log("Error fetching categories:", error)}
+				<Typography>Error fetching categories</Typography>
+			</>
+		);
 	}
 
 	return (

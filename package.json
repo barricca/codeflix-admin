@@ -13,16 +13,17 @@
 		"@react-keycloak/web": "^3.4.0",
 		"@reduxjs/toolkit": "^1.8.3",
 		"@testing-library/jest-dom": "^5.16.4",
-		"@testing-library/react": "^16.3.0",
+		"@testing-library/react": "^13.4.0",
 		"@testing-library/user-event": "^14.4.3",
 		"@types/jest": "^27.5.2",
 		"@types/node": "^17.0.45",
-		"@types/react": "^19.1.8",
-		"@types/react-dom": "^19.1.6",
+		"@types/react": "^18.0.15",
+		"@types/react-dom": "^18.0.6",
 		"axios": "^1.2.3",
 		"date-fns": "^2.29.3",
 		"jest-mock-axios": "^4.7.1",
 		"keycloak-js": "^21.0.2",
+		"nanoid": "^4.0.0",
 		"notistack": "^2.0.5",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
@@ -65,7 +66,6 @@
 		]
 	},
 	"devDependencies": {
-		"@testing-library/dom": "^10.4.0",
 		"msw": "^0.47.3"
 	}
 }

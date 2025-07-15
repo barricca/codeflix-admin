@@ -28,4 +28,11 @@ describe("CategoryList", () => {
 		const loading = screen.getByRole("progressbar");
 		expect(loading).toBeInTheDocument();
 	});
+
+	it("should render success state", async () => {
+		const expectedName = "CornflowerBlue";
+		renderWithProviders(<CategoryList />);
+
+		await 
+	});
 });
